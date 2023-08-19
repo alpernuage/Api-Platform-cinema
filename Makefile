@@ -76,7 +76,7 @@ composer: ## Execute composer command
 ## —— 🐳 Docker ——
 .PHONY: build
 build: ## 🏗️ Build the container
-	$(DOCKER_COMPOSE) build --build-arg
+	$(DOCKER_COMPOSE) build
 
 .PHONY: start
 start: ## ▶️ Start the containers
