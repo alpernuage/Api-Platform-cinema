@@ -16,7 +16,9 @@ services:
 ###< doctrine/doctrine-bundle ###
 
   php:
-    image: php:8.2-fpm-alpine
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - ./:/srv/app:rw
     ports:
