@@ -11,7 +11,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Table(name: '`movie`')]
+#[ORM\Table(name: '`type`')]
 #[ORM\Entity]
 #[ApiResource]
 class Type
@@ -31,6 +31,11 @@ class Type
     public function __construct()
     {
         $this->movies = new ArrayCollection();
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     public function getName(): string

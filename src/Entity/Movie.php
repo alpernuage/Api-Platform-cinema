@@ -34,6 +34,7 @@ class Movie
     private Collection $movieHasPeople;
 
     #[ORM\ManyToMany(targetEntity: Type::class, inversedBy: 'movies')]
+    #[ORM\JoinTable(name: 'movie_has_type')]
     private Collection $types;
 
     public function __construct()
