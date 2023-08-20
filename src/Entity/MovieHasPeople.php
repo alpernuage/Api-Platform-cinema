@@ -11,10 +11,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource]
 class MovieHasPeople
 {
+    #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'movieHasPeople')]
     #[ORM\JoinColumn(nullable: false)]
     private Movie $movie;
 
+    #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'movieHasPeople')]
     #[ORM\JoinColumn(nullable: false)]
     private People $people;
@@ -27,6 +29,7 @@ class MovieHasPeople
     #[ORM\Column(nullable: true)]
     #[Assert\Choice(choices: ['principal', 'secondaire'])]
     private ?string $significance = null;
+
 
     public function getMovie(): Movie
     {
