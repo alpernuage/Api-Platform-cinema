@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -32,8 +33,13 @@ class Movie
     #[ORM\OneToMany(mappedBy: 'movie', targetEntity: MovieHasPeople::class, orphanRemoval: true)]
     private Collection $movieHasPeople;
 
-    #[ORM\ManyToOne(inversedBy: 'movies')]
-    private ?Type $type = null;
+    #[ORM\ManyToMany(targetEntity: Type::class, inversedBy: 'movies')]
+    private Collection $types;
+
+    public function __construct()
+    {
+        $this->types = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -64,14 +70,26 @@ class Movie
         return $this;
     }
 
-    public function getType(): ?Type
+    /**
+     * @return Collection<int, Type>
+     */
+    public function getTypes(): Collection
     {
-        return $this->type;
+        return $this->types;
     }
 
-    public function setType(?Type $type): static
+    public function addType(Type $type): static
     {
-        $this->type = $type;
+        if (!$this->types->contains($type)) {
+            $this->types->add($type);
+        }
+
+        return $this;
+    }
+
+    public function removeType(Type $type): static
+    {
+        $this->types->removeElement($type);
 
         return $this;
     }

@@ -25,7 +25,7 @@ class Type
     #[Assert\Length(max: 255)]
     private string $name;
 
-    #[ORM\OneToMany(mappedBy: 'type', targetEntity: Movie::class)]
+    #[ORM\ManyToMany(targetEntity: Movie::class, mappedBy: 'types')]
     private Collection $movies;
 
     public function __construct()
@@ -57,7 +57,7 @@ class Type
     {
         if (!$this->movies->contains($movie)) {
             $this->movies->add($movie);
-            $movie->setType($this);
+            $movie->addType($this);
         }
 
         return $this;
@@ -66,10 +66,7 @@ class Type
     public function removeMovie(Movie $movie): static
     {
         if ($this->movies->removeElement($movie)) {
-            // set the owning side to null (unless already changed)
-            if ($movie->getType() === $this) {
-                $movie->setType(null);
-            }
+            $movie->removeType($this);
         }
 
         return $this;
