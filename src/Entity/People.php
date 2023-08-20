@@ -9,10 +9,10 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Table(name: '`movie`')]
+#[ORM\Table(name: 'people')]
 #[ORM\Entity]
 #[ApiResource]
-class Movie
+class People
 {
     #[ORM\Column(type: Types::INTEGER)]
     #[ORM\Id, ORM\GeneratedValue]
@@ -21,10 +21,19 @@ class Movie
     #[ORM\Column(type: Types::STRING, length: 255)]
     #[Assert\NotBlank]
     #[Assert\Length(max: 255)]
-    private string $title;
+    private string $firstname;
 
-    #[ORM\Column(type: Types::INTEGER, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     #[Assert\NotBlank]
     #[Assert\Length(max: 255)]
-    private int $duration;
+    private string $lastname;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank]
+    private \DateTimeInterface $dateOfBirth;
+
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
+    private string $nationality;
 }
