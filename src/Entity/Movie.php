@@ -32,6 +32,9 @@ class Movie
     #[ORM\OneToMany(mappedBy: 'movie', targetEntity: MovieHasPeople::class, orphanRemoval: true)]
     private Collection $movieHasPeople;
 
+    #[ORM\ManyToOne(inversedBy: 'movies')]
+    private ?Type $type = null;
+
     public function getId(): int
     {
         return $this->id;
@@ -57,6 +60,18 @@ class Movie
     public function setDuration(int $duration): static
     {
         $this->duration = $duration;
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }
